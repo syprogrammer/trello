@@ -19,8 +19,8 @@ const idToColumnText: {
 }
 
 const Column = ({ id, todos, index }: Props) => {
-    return (
-        <Draggable draggableId={id} index={index}>
+    console.log(todos)
+    return  <Draggable draggableId={id} index={index} >
             {
                 (provided) => (
                     <div
@@ -78,7 +78,7 @@ const Column = ({ id, todos, index }: Props) => {
                 )
             }
         </Draggable>
-    )
+    
 }
 
 export default Column

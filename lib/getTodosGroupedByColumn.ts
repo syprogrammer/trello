@@ -8,21 +8,24 @@ export const getTodosGroupByColumn = async () => {
     console.log(data)
     const todos = data.documents
     const columns = todos.reduce((acc, todo) => {
-        if (!acc.get(todo.status)) {
-            acc.set(todo.status, {
-                id: todo.status,
+        if (!acc.get(todo.STATUS)) {
+            console.log("todo status", todo.STATUS)
+            acc.set(todo.STATUS, {
+                id: todo.STATUS,
                 todos: []
             })
         }
-
-        acc.get(todo.status)!.todos.push({
+        console.log("acc get", todo.STATUS, acc.get(todo.STATUS))
+        acc.get(todo.STATUS)!.todos.push({
             $id: todo.$id,
             $createdAt: todo.$createdAt,
             title: todo.title,
-            status: todo.status,
+            status: todo.STATUS,
             ...[todo.image && { image: JSON.parse(todo.image) }]
         })
-
+      
+        // Update the 'todos' array in the Map entry
+        
         return acc;
     }, new Map<TypedColumn, Column>)
 
@@ -30,12 +33,13 @@ export const getTodosGroupByColumn = async () => {
     // empty todos 
 
     const columnTypes: TypedColumn[] = ["todo", "inprogress", "done"];
-    for (const columnType of columnTypes) {
-        columns.set(columnType, {
-            id: columnType,
-            todos: [],
-        })
-    }
+    // for (const columnType of columnTypes) {
+    //     console.log("columnType",columnType)
+    //     columns.set(columnType, {
+    //         id: columnType,
+    //         todos: [],
+    //     })
+    // }
 
     //sort columns by columnTypes
 

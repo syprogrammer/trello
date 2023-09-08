@@ -6,6 +6,7 @@ import { MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import Avatar from 'react-avatar'
 
 const Header = () => {
+    // const [serachString,setSearchString] = 
     return (
         <header>
             <div className='flex flex-col md:flex-row items-center p-5 bg-gray-500/10'>
