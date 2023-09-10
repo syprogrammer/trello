@@ -1,5 +1,5 @@
 'use client'
-import { Fragment, useRef } from 'react'
+import { FormEvent, Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { useModalStore } from '@/store/ModalStore'
 import { useBoardStore } from '@/store/BoardStore'
@@ -13,13 +13,24 @@ function Modal() {
         state.isOpen,
         state.closeModal
     ])
-    const [image, setImage, newTaskInput, setNewTaskInput] = useBoardStore((state) => [
+    const [addTask, image, setImage, newTaskInput, setNewTaskInput,newTaskType] = useBoardStore((state) => [
+        state.addTask,
         state.image,
         state.setImage,
         state.newTaskInput,
         state.setNewTaskInput,
+        state.newTaskType
     ])
     console.log("isopen", isOpen)
+
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        if (!newTaskInput) return
+        //add task to board
+        addTask(newTaskInput,newTaskType,image)
+        setImage(null)
+        closeModal()
+    }
 
     return (
         // Use the `Transition` component at the root level
@@ -27,7 +38,7 @@ function Modal() {
             <Dialog
                 className="relative z-10"
                 as="form"
-                // onSubmit={handleSubmit}
+                onSubmit={handleSubmit}
                 onClose={closeModal}>
                 {/*
           Use one Transition.Child to apply one transition to the backdrop...
